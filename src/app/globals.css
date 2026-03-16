@@ -50,12 +50,12 @@
     0%,
     100% {
       opacity: 1;
-      box-shadow: 0 0 10px var(--color-primary);
+      transform: scale(1);
     }
 
     50% {
-      opacity: 0.8;
-      box-shadow: 0 0 20px var(--color-secondary);
+      opacity: 0.6;
+      transform: scale(1.05);
     }
   }
 }
@@ -102,67 +102,63 @@
 }
 
 :root {
-  /* Bio-Tech Green - Light Mode */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.15 0.05 140);
+  /* Bio-Tech Nature Theme */
+  --background: oklch(0.08 0.03 160);
+  /* Deep Jungle Green -> Matte Slate-Green */
+  --foreground: oklch(0.98 0 0);
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.05 140);
+  /* Bio-Glass Card */
+  --card: oklch(0.1 0.03 160);
+  --card-foreground: oklch(0.98 0 0);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.05 140);
+  --popover: oklch(0.1 0.03 160);
+  --popover-foreground: oklch(0.98 0 0);
 
-  --primary: oklch(0.65 0.18 140);
-  /* Vibrant Logo Green */
-  --primary-foreground: oklch(0.985 0 0);
+  /* Mint Green (Primary Accent) */
+  --primary: oklch(0.85 0.15 150);
+  --primary-foreground: oklch(0.05 0.02 160);
 
-  --secondary: oklch(0.96 0.02 140);
-  --secondary-foreground: oklch(0.3 0.1 140);
+  /* Soft Cyan (Secondary/Support) */
+  --secondary: oklch(0.75 0.15 200);
+  --secondary-foreground: oklch(0.98 0 0);
 
-  --muted: oklch(0.96 0.02 140);
-  --muted-foreground: oklch(0.5 0.05 140);
+  --muted: oklch(0.15 0.04 160);
+  --muted-foreground: oklch(0.7 0.05 160);
 
-  --accent: oklch(0.96 0.02 140);
-  --accent-foreground: oklch(0.3 0.1 140);
+  --accent: oklch(0.2 0.05 160);
+  --accent-foreground: oklch(0.85 0.15 150);
 
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.02 140);
-  --input: oklch(0.9 0.02 140);
-  --ring: oklch(0.65 0.18 140);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.2 0.05 160);
+  --input: oklch(0.2 0.05 160);
+  --ring: oklch(0.85 0.15 150);
 
   --radius: 0.5rem;
 }
 
+/* Ensure .dark class matches */
 .dark {
-  /* Bio-Tech Green - Deep Dark Mode */
-  --background: oklch(0.1 0.03 140);
-  /* Deep Forest Black */
-  --foreground: oklch(0.95 0.02 140);
-
-  --card: oklch(0.15 0.04 140);
-  --card-foreground: oklch(0.95 0.02 140);
-
-  --popover: oklch(0.15 0.04 140);
-  --popover-foreground: oklch(0.95 0.02 140);
-
-  --primary: oklch(0.7 0.18 140);
-  /* Luminous Green */
-  --primary-foreground: oklch(0.1 0.03 140);
-
-  --secondary: oklch(0.2 0.05 140);
-  --secondary-foreground: oklch(0.95 0.02 140);
-
-  --muted: oklch(0.2 0.04 140);
-  --muted-foreground: oklch(0.6 0.05 140);
-
-  --accent: oklch(0.25 0.08 140);
-  /* Deep Vibrant Green */
-  --accent-foreground: oklch(0.95 0.02 140);
-
-  --destructive: oklch(0.6 0.2 25);
-  --border: oklch(0.25 0.05 140);
-  --input: oklch(0.25 0.05 140);
-  --ring: oklch(0.6 0.18 140);
+  --background: oklch(0.08 0.03 160);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.1 0.03 160);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.1 0.03 160);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.85 0.15 150);
+  --primary-foreground: oklch(0.05 0.02 160);
+  --secondary: oklch(0.75 0.15 200);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.15 0.04 160);
+  --muted-foreground: oklch(0.7 0.05 160);
+  --accent: oklch(0.2 0.05 160);
+  --accent-foreground: oklch(0.85 0.15 150);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.2 0.05 160);
+  --input: oklch(0.2 0.05 160);
+  --ring: oklch(0.85 0.15 150);
 }
 
 @layer base {
@@ -172,5 +168,14 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Bio-Tech Matte Background */
+    background:
+      radial-gradient(circle at 50% -20%, oklch(0.15 0.05 160 / 0.3) 0%, transparent 60%),
+      /* Subtle Top Light */
+      radial-gradient(circle at 100% 50%, oklch(0.12 0.05 150 / 0.15) 0%, transparent 50%),
+      /* Faint right glow */
+      oklch(0.08 0.03 160);
+    /* Deep Matte Slate-Green Base */
+    background-attachment: fixed;
   }
 }

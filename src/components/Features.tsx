@@ -1,41 +1,10 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { motion } from "framer-motion"
-
-const features = [
-    {
-        title: "HILT Лазер",
-        description: "Лазерная терапия высокой интенсивности для мгновенного снятия боли и глубокой регенерации тканей.",
-        image: "/images/hilt.png",
-    },
-    {
-        title: "SIS Магнит",
-        description: "Супер индуктивная система для восстановления нервной проводимости и укрепления мышечного корсета.",
-        image: "/images/sis.png",
-    },
-    {
-        title: "ИИ Диагностика",
-        description: "Анализ осанки и биомеханики движения с помощью искусственного интеллекта для точного диагноза.",
-        image: "/images/ai.png",
-    },
-    {
-        title: "Ударно-волновая терапия",
-        description: "Эффективное лечение хронических воспалений и разрушение кальцинатов акустическими волнами.",
-        image: "/images/uvt.png",
-    },
-    {
-        title: "Кинезиотерапия",
-        description: "Активная реабилитация через движение. Восстановление правильных паттернов движения и укрепление мышц.",
-        image: "/images/kinesio.png",
-    },
-    {
-        title: "Иглорефлексотерапия",
-        description: "Точечное воздействие на нервную систему для снятия боли, спазмов и восстановления баланса организма.",
-        image: "/images/acupuncture.png",
-    },
-]
+import { services } from "@/data/services"
 
 const container = {
     hidden: { opacity: 0 },
@@ -90,32 +59,37 @@ export function Features() {
                     viewport={{ once: true, margin: "-100px" }}
                     className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
-                    {features.map((feature, index) => (
+                    {services.map((service, index) => (
                         <motion.div key={index} variants={item}>
-                            <Card className="h-full border border-white/20 bg-white/5 backdrop-blur-lg hover:bg-white/10 hover:border-primary/50 transition-all duration-300 group overflow-hidden shadow-lg hover:shadow-primary/20">
-                                <CardHeader className="p-0">
-                                    <div className="relative w-full h-48 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center p-6 group-hover:scale-105 transition-transform duration-500">
-                                        <div className="relative w-full h-full drop-shadow-2xl">
-                                            <Image
-                                                src={feature.image}
-                                                alt={feature.title}
-                                                fill
-                                                className="object-contain"
-                                            />
+                            <Link href={`/services/${service.id}`} className="block h-full cursor-pointer">
+                                <Card className="h-full border border-white/20 bg-white/5 backdrop-blur-lg hover:bg-white/10 hover:border-primary/50 transition-all duration-300 group overflow-hidden shadow-lg hover:shadow-primary/20">
+                                    <CardHeader className="p-0">
+                                        <div className="relative w-full h-48 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center p-6 group-hover:scale-105 transition-transform duration-500">
+                                            <div className="relative w-full h-full drop-shadow-2xl">
+                                                <Image
+                                                    src={service.image}
+                                                    alt={service.title}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="px-6 pt-4">
-                                        <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                                            {feature.title}
-                                        </CardTitle>
-                                    </div>
-                                </CardHeader>
-                                <CardContent className="px-6 pb-6 pt-2">
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        {feature.description}
-                                    </p>
-                                </CardContent>
-                            </Card>
+                                        <div className="px-6 pt-4">
+                                            <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+                                                {service.title}
+                                                <span className="text-xs text-muted-foreground font-normal ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    Подробнее →
+                                                </span>
+                                            </CardTitle>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent className="px-6 pb-6 pt-2">
+                                        <p className="text-muted-foreground leading-relaxed line-clamp-3">
+                                            {service.shortDescription}
+                                        </p>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </motion.div>
                     ))}
                 </motion.div>

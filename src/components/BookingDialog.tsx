@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 import {
     Dialog,
     DialogContent,
@@ -26,7 +27,9 @@ export function BookingDialog({ children }: { children: React.ReactNode }) {
         // Simulate API call
         setTimeout(() => {
             setOpen(false)
-            alert("Спасибо! Мы свяжемся с вами в ближайшее время.")
+            toast.success("Заявка отправлена!", {
+                description: "Мы свяжемся с вами в течение 10 минут.",
+            })
         }, 1000)
     }
 
