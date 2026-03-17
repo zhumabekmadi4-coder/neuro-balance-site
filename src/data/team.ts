@@ -1,29 +1,38 @@
 export const team = [
     {
-        id: "dr-ivanova",
-        name: "Др. Елена Иванова",
-        role: "Травматолог-ортопед",
-        image: "/images/doctors/doctor1.png", // Placeholder
+        id: "aiman-adilbekovna",
+        name: "Айман Адильбековна",
+        role: "Врач-невролог",
+        image: "/images/doctors/aiman.webp",
+        experience: "5 лет",
+        specialties: ["Неврология", "Диагностика", "Реабилитация"],
+        bio: "Специализируется на диагностике и лечении неврологических заболеваний. Индивидуальный подход к каждому пациенту."
+    },
+    {
+        id: "asel-kairollaevna",
+        name: "Асель Кайроллаевна",
+        role: "Физиотерапевт",
+        image: "/images/doctors/asel.webp",
         experience: "4 года",
+        specialties: ["HILT-терапия", "SIS-терапия", "Аппаратная реабилитация"],
+        bio: "Эксперт по современной аппаратной физиотерапии. Эффективно сочетает технологии SIS и HILT для снятия боли."
+    },
+    {
+        id: "kaisar-kuanyshuly",
+        name: "Кайсар Куанышулы",
+        role: "Травматолог-ортопед",
+        image: "/images/doctors/kaisar.webp",
+        experience: "6 лет",
         specialties: ["Спортивные травмы", "Кинезиотейпирование", "PRP-терапия"],
         bio: "Современный подход к лечению суставов. Специализируется на безоперационном восстановлении после спортивных травм."
     },
     {
-        id: "dr-petrov",
-        name: "Др. Сергей Петров",
+        id: "madi-mukhtaruly",
+        name: "Мади Мухтарулы",
         role: "Врач-реабилитолог",
-        image: "/images/doctors/doctor2.png", // Placeholder
+        image: "/images/doctors/madi.webp",
         experience: "3 года",
         specialties: ["ЛФК", "Коррекция осанки", "Миофасциальный релиз"],
         bio: "Сертифицированный инструктор по лечебной физкультуре. Составляет индивидуальные программы восстановления подвижности."
-    },
-    {
-        id: "dr-kim",
-        name: "Др. Алина Ким",
-        role: "Физиотерапевт",
-        image: "/images/doctors/doctor3.png", // Placeholder
-        experience: "5 лет",
-        specialties: ["HILT-терапия", "SIS-терапия", "Аппаратная реабилитация"],
-        bio: "Эксперт по современной аппаратной физиотерапии. Эффективно сочетает технологии SIS и HILT для снятия боли."
     }
 ]

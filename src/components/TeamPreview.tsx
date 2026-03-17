@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { team } from "@/data/team"
@@ -28,27 +29,31 @@ export function TeamPreview() {
                     </Link>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                    {team.slice(0, 3).map((doctor) => (
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {team.map((doctor) => (
                         <div
                             key={doctor.id}
                             className="group relative bg-muted/30 rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
                         >
-                            <div className="p-6">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary">
-                                        {/* Avatar placeholder */}
-                                        {doctor.name[0]}
-                                    </div>
-                                    <div>
-                                        <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{doctor.name}</h3>
-                                        <p className="text-sm text-muted-foreground">{doctor.role}</p>
-                                    </div>
-                                </div>
-                                <p className="text-muted-foreground text-sm line-clamp-3 mb-6">
+                            {/* Doctor Photo */}
+                            <div className="aspect-[3/4] relative overflow-hidden bg-muted">
+                                <Image
+                                    src={doctor.image}
+                                    alt={doctor.name}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    unoptimized
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                            </div>
+
+                            <div className="p-5">
+                                <h3 className="font-bold text-lg group-hover:text-primary transition-colors">{doctor.name}</h3>
+                                <p className="text-sm text-muted-foreground mb-3">{doctor.role}</p>
+                                <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
                                     {doctor.bio}
                                 </p>
-                                <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                                <div className="flex items-center justify-between pt-3 border-t border-border/50">
                                     <div className="flex items-center gap-1 text-yellow-500 text-xs font-bold">
                                         <Star className="fill-current w-3 h-3" />
                                         <span>4.9</span>

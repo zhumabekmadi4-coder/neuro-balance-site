@@ -49,6 +49,7 @@ export function Header() {
         { name: "Технологии", href: "#services-carousel" },
         { name: "О нас", href: "#about" },
         { name: "Услуги", href: "#services" },
+        { name: "Галерея", href: "/gallery" },
         { name: "FAQ", href: "#faq" },
         { name: "Контакты", href: "#footer" },
     ]

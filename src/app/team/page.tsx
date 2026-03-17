@@ -3,7 +3,9 @@ import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
+import { BookingDialog } from "@/components/BookingDialog"
 
 export default function TeamPage() {
     return (
@@ -30,20 +32,19 @@ export default function TeamPage() {
 
                 {/* Team Grid */}
                 <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {team.map((doctor) => (
-                            // Use index as key if static, better to use id
                             <div key={doctor.id} className="group relative bg-card hover:bg-card/50 border border-border/50 hover:border-primary/20 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2">
                                 {/* Image Area */}
-                                <div className="aspect-[4/5] relative bg-muted grayscale group-hover:grayscale-0 transition-all duration-700">
-                                    {/* Overlay gradient */}
+                                <div className="aspect-[3/4] relative bg-muted overflow-hidden">
                                     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-80 z-10" />
-
-                                    {/* Placeholder for real image or avatar */}
-                                    {/* Note: In real production, replace with actual Image component */}
-                                    <div className="absolute inset-0 flex items-center justify-center bg-secondary/30">
-                                        <span className="text-6xl">👨‍⚕️</span>
-                                    </div>
+                                    <Image
+                                        src={doctor.image}
+                                        alt={doctor.name}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        unoptimized
+                                    />
                                 </div>
 
                                 {/* Content */}
@@ -70,9 +71,11 @@ export default function TeamPage() {
                                         ))}
                                     </div>
 
-                                    <Button className="w-full bg-foreground text-background hover:bg-primary hover:text-white transition-colors border-0">
-                                        Записаться к врачу
-                                    </Button>
+                                    <BookingDialog>
+                                        <Button className="w-full bg-foreground text-background hover:bg-primary hover:text-white transition-colors border-0">
+                                            Записаться к врачу
+                                        </Button>
+                                    </BookingDialog>
                                 </div>
                             </div>
                         ))}
