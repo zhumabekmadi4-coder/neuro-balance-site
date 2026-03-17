@@ -5,8 +5,10 @@ import { BookingDialog } from "@/components/BookingDialog"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import * as React from "react"
+import { useLenis } from "lenis/react"
 
 export function Hero() {
+    const lenis = useLenis()
     const mouseX = useMotionValue(0)
     const mouseY = useMotionValue(0)
 
@@ -106,6 +108,10 @@ export function Hero() {
                             size="lg"
                             variant="outline"
                             className="bg-secondary/10 backdrop-blur-sm border-secondary/50 text-secondary hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 text-lg h-14 px-10 rounded-full group"
+                            onClick={() => {
+                                const el = document.querySelector("#services") as HTMLElement
+                                if (el && lenis) lenis.scrollTo(el, { offset: -100 })
+                            }}
                         >
                             <span className="mr-2">Наши услуги</span> <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         </Button>
