@@ -1,27 +1,10 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir, unlink } from "fs/promises";
-import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
-// Use Vercel Blob if configured, otherwise save locally
-async function uploadWithBlob(file: File) {
-  const { put } = await import("@vercel/blob");
-  const blob = await put(`neurobalance/${Date.now()}-${file.name}`, file, {
-    access: "public",
-  });
-  return blob.url;
-}
-
-async function uploadLocally(file: File) {
-  const uploadDir = path.join(process.cwd(), "public", "images", "uploads");
-  await mkdir(uploadDir, { recursive: true });
-
-  const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
-  const filePath = path.join(uploadDir, fileName);
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(filePath, buffer);
-
-  return `/images/uploads/${fileName}`;
+function getSupabase() {
+  const url = process.env.SUPABASE_URL!;
+  const key = process.env.SUPABASE_SERVICE_KEY!;
+  return createClient(url, key);
 }
 
 export async function POST(request: Request) {
@@ -33,21 +16,30 @@ export async function POST(request: Request) {
   }
 
   try {
-    let url: string;
+    const supabase = getSupabase();
+    const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      url = await uploadWithBlob(file);
-    } else {
-      url = await uploadLocally(file);
+    const { error } = await supabase.storage
+      .from("neurobalance")
+      .upload(fileName, buffer, {
+        contentType: file.type,
+        upsert: true,
+      });
+
+    if (error) {
+      console.error("Upload error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ url });
+    const { data: urlData } = supabase.storage
+      .from("neurobalance")
+      .getPublicUrl(fileName);
+
+    return NextResponse.json({ url: urlData.publicUrl });
   } catch (error) {
     console.error("Upload error:", error);
-    return NextResponse.json(
-      { error: "Upload failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
 
@@ -55,12 +47,13 @@ export async function DELETE(request: Request) {
   const { url } = await request.json();
 
   try {
-    if (url && url.includes("blob.vercel-storage.com")) {
-      const { del } = await import("@vercel/blob");
-      await del(url);
-    } else if (url && url.startsWith("/images/uploads/")) {
-      const filePath = path.join(process.cwd(), "public", url);
-      await unlink(filePath).catch(() => {});
+    if (url && url.includes("supabase.co/storage")) {
+      const supabase = getSupabase();
+      // Extract file path from URL
+      const match = url.match(/neurobalance\/(.+)$/);
+      if (match) {
+        await supabase.storage.from("neurobalance").remove([match[1]]);
+      }
     }
   } catch {
     // Ignore delete errors
