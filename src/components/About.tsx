@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Users } from "lucide-react"
 
 export function About() {
@@ -34,21 +35,24 @@ export function About() {
                         </p>
                         <div className="grid grid-cols-2 gap-8 pt-4">
                             <div className="p-4 rounded-xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                                <h4 className="text-4xl font-bold text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">100%</h4>
-                                <p className="text-sm text-gray-400">Современные методики</p>
+                                <h3 className="text-4xl font-bold text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">8+</h3>
+                                <p className="text-sm text-gray-300">направлений лечения без операций</p>
                             </div>
                             <div className="p-4 rounded-xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                                <Users className="h-10 w-10 text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]" />
-                                <p className="text-sm text-gray-400">Молодая прогрессивная команда</p>
+                                <Users className="h-10 w-10 text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]" aria-hidden="true" />
+                                <p className="text-sm text-gray-300">Команда практикующих врачей</p>
                             </div>
                         </div>
                     </div>
-                    <div className="flex-1 relative h-[400px] w-full bg-secondary/5 rounded-2xl overflow-hidden mt-8 md:mt-0 border border-primary/20 shadow-[0_0_30px_rgba(var(--primary),0.1)] group">
-                        {/* Abstract Medical visual placeholder */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-accent/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-700">
-                            <div className="absolute inset-0 bg-[linear-gradient(rgba(74,222,128,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(74,222,128,0.1)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]" />
-                            <span className="text-primary font-bold text-3xl tracking-widest drop-shadow-[0_0_15px_rgba(74,222,128,0.8)] z-10">NEURO BALANCE</span>
-                        </div>
+                    <div className="flex-1 relative h-[400px] w-full rounded-2xl overflow-hidden mt-8 md:mt-0 border border-primary/20 shadow-[0_0_30px_rgba(74,222,128,0.1)] group">
+                        <Image
+                            src="/images/gallery/gallery-01.webp"
+                            alt="Клиника Neuro Balance в Астане — процедурный кабинет"
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-background/70 via-background/20 to-transparent" />
                     </div>
                 </div>
             </div>

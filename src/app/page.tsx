@@ -1,54 +1,79 @@
-import { Header } from "@/components/Header"
-import { Hero } from "@/components/Hero"
-import { ServiceScroll } from "@/components/ServiceScroll"
-import { About } from "@/components/About"
-import { Services } from "@/components/Services"
-import { TeamPreview } from "@/components/TeamPreview"
-import { FAQ } from "@/components/FAQ"
-import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { ServiceScroll } from "@/components/ServiceScroll";
+import { About } from "@/components/About";
+import { Services } from "@/components/Services";
+import { TeamPreview } from "@/components/TeamPreview";
+import { FAQ } from "@/components/FAQ";
+import { Footer } from "@/components/Footer";
+import { CLINIC } from "@/data/clinic";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.neuro-balance.kz";
 
 const schemaOrg = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: CLINIC.name,
+      inLanguage: "ru-RU",
+      publisher: { "@id": `${siteUrl}/#clinic` },
+    },
+    {
       "@type": "MedicalClinic",
-      "@id": "https://neurobalance-web.netlify.app/#clinic",
-      name: "Neuro Balance",
-      description: "Клиника лечения позвоночника и суставов без операций. HILT-лазер, SIS-магнит, ударно-волновая терапия, ИИ-диагностика осанки.",
-      url: "https://neurobalance-web.netlify.app",
-      telephone: "+77770679380",
-      email: "info@neurobalance.kz",
+      "@id": `${siteUrl}/#clinic`,
+      name: CLINIC.name,
+      alternateName: "Клиника Neuro Balance",
+      description: CLINIC.description,
+      url: siteUrl,
+      logo: `${siteUrl}/images/logo.webp`,
+      image: `${siteUrl}/images/og-image.webp`,
+      telephone: CLINIC.phoneIntl,
+      email: CLINIC.email,
+      priceRange: "$$",
+      medicalSpecialty: [
+        "PhysicalTherapy",
+        "Rehabilitation",
+        "Neurology",
+        "Orthopedic",
+      ],
       address: {
         "@type": "PostalAddress",
-        streetAddress: "пр. Кабанбай батыра, 28",
-        addressLocality: "Астана",
-        addressCountry: "KZ",
+        streetAddress: CLINIC.streetAddress,
+        addressLocality: CLINIC.city,
+        postalCode: CLINIC.postalCode,
+        addressCountry: CLINIC.country,
       },
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "08:00",
-          closes: "20:00",
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Saturday", "Sunday"],
-          opens: "09:00",
-          closes: "18:00",
-        },
-      ],
-      sameAs: ["https://instagram.com", "https://wa.me/77770679380"],
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: CLINIC.latitude,
+        longitude: CLINIC.longitude,
+      },
+      hasMap: `https://2gis.kz/astana/search/${encodeURIComponent(CLINIC.streetAddress)}`,
+      openingHoursSpecification: CLINIC.openingHours.map((h) => ({
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: h.dayOfWeek,
+        opens: h.opens,
+        closes: h.closes,
+      })),
+      areaServed: {
+        "@type": "City",
+        name: "Астана",
+      },
+      sameAs: [CLINIC.socials.instagram, CLINIC.socials.whatsapp],
     },
     {
       "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
       mainEntity: [
         {
           "@type": "Question",
           name: "Болезненны ли процедуры?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Нет, большинство наших процедур, таких как HILT-лазер или магнитотерапия, абсолютно безболезненны. Ударно-волновая терапия может вызывать легкий дискомфорт, который быстро проходит.",
+            text: "Нет, большинство наших процедур, таких как HILT-лазер или магнитотерапия, абсолютно безболезненны и даже приятны. Ударно-волновая терапия может вызывать легкий дискомфорт, который быстро проходит.",
           },
         },
         {
@@ -56,7 +81,7 @@ const schemaOrg = {
           name: "Сколько длится курс лечения?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "В среднем курс состоит из 5-10 процедур, в зависимости от диагноза и стадии заболевания. Точный план составляет врач на первичной консультации.",
+            text: "В среднем курс состоит из 5-10 процедур, в зависимости от диагноза и стадии заболевания. Точный план лечения составляет врач на первичной консультации.",
           },
         },
         {
@@ -64,7 +89,7 @@ const schemaOrg = {
           name: "Нужно ли направление от врача?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Нет, вы можете записаться напрямую. Первичный приём уже включает осмотр врача, диагностику и постановку диагноза.",
+            text: "Нет, вы можете записаться к нам напрямую. Первичный приём уже включает осмотр врача, диагностику и постановку диагноза.",
           },
         },
         {
@@ -72,13 +97,13 @@ const schemaOrg = {
           name: "Есть ли противопоказания?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Да, есть противопоказания (онкология, беременность, кардиостимуляторы и др.). Врач обязательно опросит вас перед началом лечения.",
+            text: "Да, как у любых медицинских процедур, есть противопоказания (онкология, беременность, кардиостимуляторы и др.). Врач обязательно опросит вас перед началом лечения.",
           },
         },
       ],
     },
   ],
-}
+};
 
 export default function Home() {
   return (
@@ -89,7 +114,7 @@ export default function Home() {
       />
       <div className="min-h-[100dvh] flex flex-col font-sans">
         <Header />
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow">
           <Hero />
           <ServiceScroll />
           <About />
@@ -100,5 +125,5 @@ export default function Home() {
         <Footer />
       </div>
     </>
-  )
+  );
 }

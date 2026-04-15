@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { team } from "@/data/team"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
@@ -6,13 +7,53 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft } from "lucide-react"
 import { BookingDialog } from "@/components/BookingDialog"
+import { CLINIC } from "@/data/clinic"
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.neuro-balance.kz"
+
+export const metadata: Metadata = {
+    title: "Команда врачей",
+    description:
+        "Врачи клиники Neuro Balance в Астане: невролог, физиотерапевт, травматолог-ортопед, реабилитолог. Опыт работы с HILT-лазером, SIS-магнитом, ударно-волновой терапией.",
+    alternates: { canonical: "/team" },
+    openGraph: {
+        type: "website",
+        title: "Команда врачей — Neuro Balance",
+        description: "Врачи Neuro Balance: неврология, физиотерапия, ортопедия, реабилитация.",
+        url: "/team",
+    },
+}
+
+const physiciansJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": team.map((doctor) => ({
+        "@type": "Physician",
+        "@id": `${siteUrl}/team#${doctor.id}`,
+        name: doctor.name,
+        jobTitle: doctor.role,
+        description: doctor.bio,
+        image: `${siteUrl}${doctor.image}`,
+        knowsAbout: doctor.specialties,
+        medicalSpecialty: doctor.specialties,
+        worksFor: {
+            "@type": "MedicalClinic",
+            "@id": `${siteUrl}/#clinic`,
+            name: CLINIC.name,
+            url: siteUrl,
+        },
+    })),
+}
 
 export default function TeamPage() {
     return (
         <div className="min-h-[100dvh] bg-background font-sans selection:bg-primary/20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(physiciansJsonLd) }}
+            />
             <Header />
 
-            <main className="pt-32 pb-20">
+            <main id="main-content" className="pt-32 pb-20">
                 {/* Page Header */}
                 <div className="container mx-auto px-4 mb-20">
                     <Link href="/">
@@ -22,11 +63,12 @@ export default function TeamPage() {
                         </Button>
                     </Link>
 
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-foreground">
                         Наши специалисты
                     </h1>
-                    <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                        Врачи высшей категории, объединившие опыт и технологии для вашего здоровья.
+                    <p className="text-xl text-gray-300 max-w-2xl leading-relaxed">
+                        Врачи Neuro Balance — невролог, физиотерапевт, травматолог-ортопед и реабилитолог.
+                        Опыт работы с HILT-лазером, SIS-магнитом и ударно-волновой терапией.
                     </p>
                 </div>
 
@@ -43,7 +85,6 @@ export default function TeamPage() {
                                         alt={doctor.name}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        unoptimized
                                     />
                                 </div>
 

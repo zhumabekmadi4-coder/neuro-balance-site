@@ -16,14 +16,12 @@ export function Header() {
     const lenis = useLenis()
 
     const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        if (href.startsWith("#")) {
-            e.preventDefault()
-            const target = document.querySelector(href) as HTMLElement
-            if (target && lenis) {
-                lenis.scrollTo(target, { offset: -100 })
-                setMobileMenuOpen(false)
-            }
-        }
+        if (!href.startsWith("#")) return
+        e.preventDefault()
+        const target = document.querySelector(href)
+        if (!(target instanceof HTMLElement) || !lenis) return
+        lenis.scrollTo(target, { offset: -100 })
+        setMobileMenuOpen(false)
     }
 
     React.useEffect(() => {
@@ -66,7 +64,11 @@ export function Header() {
             <div className="absolute inset-0 bg-black/20 backdrop-blur-md border-b border-primary/30 shadow-[0_4px_30px_rgba(74,222,128,0.1)] supports-[backdrop-filter]:bg-black/10" />
 
             <div className="container mx-auto px-4 flex items-center justify-between py-4 relative z-10">
-                <Link href="/" className="flex items-center gap-2 group">
+                <Link
+                    href="/"
+                    aria-label="Neuro Balance — на главную"
+                    className="flex items-center gap-2 group"
+                >
                     <Image
                         src="/images/logo.webp"
                         alt="Neuro Balance"

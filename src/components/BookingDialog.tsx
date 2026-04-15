@@ -1,79 +1,67 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
+import { Button } from "@/components/ui/button";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { MessageCircle, Phone, MapPin, Clock } from "lucide-react";
+import { CLINIC } from "@/data/clinic";
 
-import { useState } from "react"
-
-// Minimal inline Input/Label to avoid extra files if not strictly needed, or I should create them.
-// I'll stick to standard HTML input/label with Tailwind classes for speed, unless user insisted on ALL Shadcn.
-// User said "Shadcn UI (accordion... cards, buttons)". Did not explicitly ask for Input/Label.
-// I'll make them nice with standard classes.
+const whatsappHref = `https://wa.me/${CLINIC.whatsappNumber}?text=${encodeURIComponent(
+  "Здравствуйте! Хочу записаться на приём в Neuro Balance.",
+)}`;
+const telHref = `tel:${CLINIC.phoneIntl}`;
 
 export function BookingDialog({ children }: { children: React.ReactNode }) {
-    const [open, setOpen] = useState(false)
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-[440px]">
+        <DialogHeader>
+          <DialogTitle>Запись на приём</DialogTitle>
+          <DialogDescription>
+            Свяжитесь с нами удобным способом — мы ответим в течение 10 минут.
+          </DialogDescription>
+        </DialogHeader>
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        // Simulate API call
-        setTimeout(() => {
-            setOpen(false)
-            toast.success("Заявка отправлена!", {
-                description: "Мы свяжемся с вами в течение 10 минут.",
-            })
-        }, 1000)
-    }
+        <div className="grid gap-3 pt-2">
+          <Button
+            asChild
+            size="lg"
+            className="w-full h-12 rounded-full bg-[#25D366] text-white hover:bg-[#1faa52]"
+          >
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Написать в WhatsApp
+            </a>
+          </Button>
 
-    return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                {children}
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Запись на прием</DialogTitle>
-                    <DialogDescription>
-                        Оставьте свои данные, и мы перезвоним вам для уточнения деталей.
-                    </DialogDescription>
-                </DialogHeader>
-                <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-                    <div className="grid gap-2">
-                        <label htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                            Имя
-                        </label>
-                        <input
-                            id="name"
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            placeholder="Иван Иванов"
-                            required
-                        />
-                    </div>
-                    <div className="grid gap-2">
-                        <label htmlFor="phone" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                            Телефон
-                        </label>
-                        <input
-                            id="phone"
-                            type="tel"
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            placeholder="+7 (999) 000-00-00"
-                            required
-                        />
-                    </div>
-                    <DialogFooter className="mt-4">
-                        <Button type="submit">Отправить заявку</Button>
-                    </DialogFooter>
-                </form>
-            </DialogContent>
-        </Dialog>
-    )
+          <Button asChild size="lg" variant="outline" className="w-full h-12 rounded-full">
+            <a href={telHref}>
+              <Phone className="mr-2 h-5 w-5" />
+              Позвонить: {CLINIC.phoneDisplay}
+            </a>
+          </Button>
+        </div>
+
+        <div className="mt-4 space-y-2 border-t pt-4 text-sm text-muted-foreground">
+          <div className="flex items-start gap-2">
+            <MapPin className="h-4 w-4 shrink-0 mt-0.5 text-primary" />
+            <span>{CLINIC.address}</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <Clock className="h-4 w-4 shrink-0 mt-0.5 text-primary" />
+            <span>
+              Пн–Пт: {CLINIC.hoursWeekday} · Сб–Вс: {CLINIC.hoursWeekend}
+            </span>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }

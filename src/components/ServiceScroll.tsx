@@ -119,7 +119,7 @@ export function ServiceScroll() {
                                         <div className="w-3 h-3 rounded-full bg-green-500/50" />
                                     </div>
                                     <div className="ml-4 px-3 py-1 bg-muted/50 rounded text-xs font-mono text-muted-foreground">
-                                        /modules/{services[activeIndex].id}
+                                        neuro-balance.kz/services/{services[activeIndex].id}
                                     </div>
                                 </div>
 

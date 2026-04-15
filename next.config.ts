@@ -1,13 +1,14 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: false,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "*.supabase.co",
-      },
-    ],
+    unoptimized: true,
+  },
+  turbopack: {
+    root: path.join(__dirname),
   },
 };
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Star } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { team } from "@/data/team"
 
@@ -31,18 +31,19 @@ export function TeamPreview() {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {team.map((doctor) => (
-                        <div
+                        <Link
                             key={doctor.id}
-                            className="group relative bg-muted/30 rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+                            href="/team"
+                            aria-label={`Подробнее о враче: ${doctor.name}, ${doctor.role}`}
+                            className="group relative bg-muted/30 rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 block"
                         >
-                            {/* Doctor Photo */}
                             <div className="aspect-[3/4] relative overflow-hidden bg-muted">
                                 <Image
                                     src={doctor.image}
                                     alt={doctor.name}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    unoptimized
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                             </div>
@@ -54,17 +55,14 @@ export function TeamPreview() {
                                     {doctor.bio}
                                 </p>
                                 <div className="flex items-center justify-between pt-3 border-t border-border/50">
-                                    <div className="flex items-center gap-1 text-yellow-500 text-xs font-bold">
-                                        <Star className="fill-current w-3 h-3" />
-                                        <span>4.9</span>
-                                        <span className="text-muted-foreground font-normal ml-1">Rating</span>
-                                    </div>
-                                    <span className="text-xs font-medium text-primary group-hover:underline">
+                                    <span className="text-xs text-muted-foreground">{doctor.experience} опыта</span>
+                                    <span className="text-xs font-medium text-primary group-hover:underline inline-flex items-center gap-1">
                                         Подробнее
+                                        <ArrowRight className="h-3 w-3" />
                                     </span>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
