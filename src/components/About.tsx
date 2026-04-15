@@ -1,10 +1,32 @@
-import Image from "next/image"
-import { Users } from "lucide-react"
+import { Activity, ShieldCheck, Stethoscope, Users } from "lucide-react"
+
+const stats = [
+    {
+        icon: Stethoscope,
+        title: "8+",
+        label: "направлений лечения без операций",
+    },
+    {
+        icon: Activity,
+        title: "HILT · SIS · УВТ",
+        label: "современная аппаратная физиотерапия",
+    },
+    {
+        icon: ShieldCheck,
+        title: "Доказательная",
+        label: "международные клинические протоколы",
+    },
+    {
+        icon: Users,
+        title: "Своя команда",
+        label: "невролог, ортопед, физиотерапевт, реабилитолог",
+    },
+]
 
 export function About() {
     return (
-        <section id="about" className="py-20 bg-transparent relative overflow-hidden">
-            {/* Side Glow & DNA Pulse */}
+        <section id="about" className="py-24 bg-transparent relative overflow-hidden">
+            {/* Side Glow */}
             <div className="absolute top-0 right-0 h-full w-[600px] opacity-20 pointer-events-none">
                 <svg className="w-full h-full" viewBox="0 0 400 800" preserveAspectRatio="none">
                     <path fill="url(#gradient-about)" fillOpacity="1" d="M300,0C250,100,100,200,150,300C200,400,350,500,300,600C250,700,150,750,200,800H400V0Z"></path>
@@ -18,42 +40,32 @@ export function About() {
             </div>
             <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="container mx-auto px-4 relative z-10">
-                <div className="flex flex-col md:flex-row items-center gap-12">
-                    <div className="flex-1 space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-bold text-white drop-shadow-md">
-                            Профессиональный подход к здоровью спины
-                        </h2>
-                        <p className="text-lg text-gray-300 leading-relaxed">
-                            В Neuro Balance мы объединили опыт лучших врачей-травматологов и реабилитологов
-                            с возможностями современной медицины. Наш подход основан на международных протоколах
-                            лечения боли и восстановления подвижности.
-                        </p>
-                        <p className="text-lg text-gray-300 leading-relaxed">
-                            Мы не просто снимаем боль, а устраняем её причину, возвращая пациентам
-                            радость активной жизни без лекарств и операций.
-                        </p>
-                        <div className="grid grid-cols-2 gap-8 pt-4">
-                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                                <h3 className="text-4xl font-bold text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">8+</h3>
-                                <p className="text-sm text-gray-300">направлений лечения без операций</p>
-                            </div>
-                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 backdrop-blur-sm">
-                                <Users className="h-10 w-10 text-primary mb-2 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]" aria-hidden="true" />
-                                <p className="text-sm text-gray-300">Команда практикующих врачей</p>
-                            </div>
+            <div className="container mx-auto px-4 relative z-10 max-w-5xl">
+                <div className="text-center mb-14">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white drop-shadow-md mb-6">
+                        Профессиональный подход к здоровью спины
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                        В Neuro Balance мы объединили опыт врачей-травматологов и реабилитологов с
+                        возможностями современной медицины. Подход основан на международных протоколах
+                        лечения боли и восстановления подвижности — мы устраняем причину, а не только симптом.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    {stats.map(({ icon: Icon, title, label }) => (
+                        <div
+                            key={title}
+                            className="p-5 md:p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-primary/30 hover:bg-white/[0.07] transition-colors"
+                        >
+                            <Icon
+                                className="h-8 w-8 text-primary mb-3 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]"
+                                aria-hidden="true"
+                            />
+                            <h3 className="text-lg md:text-xl font-bold text-white mb-1">{title}</h3>
+                            <p className="text-sm text-gray-300 leading-relaxed">{label}</p>
                         </div>
-                    </div>
-                    <div className="flex-1 relative h-[400px] w-full rounded-2xl overflow-hidden mt-8 md:mt-0 border border-primary/20 shadow-[0_0_30px_rgba(74,222,128,0.1)] group">
-                        <Image
-                            src="/images/gallery/gallery-01.webp"
-                            alt="Клиника Neuro Balance в Астане — процедурный кабинет"
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-background/70 via-background/20 to-transparent" />
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
